@@ -1,0 +1,54 @@
+# Install once per clone: .venv/bin/pre-commit install
+# Run over the whole tree: .venv/bin/pre-commit run --all-files
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.2
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: detect-private-key
+
+  # Credential guards. `.gitignore` already keeps these files out, so everything
+  # below is the second line of defence: it catches what .gitignore cannot, namely
+  # a deliberate `git add -f` and a credential pasted into a file that is tracked.
+  - repo: local
+    hooks:
+      - id: forbid-credential-files
+        name: refuse the files that hold live credentials
+        entry: >-
+          this file holds live credentials and must never be committed, not even with
+          `git add -f`; commit the .example variant instead
+        language: fail
+        files: '^(users\.toml|\.env)$'
+
+      - id: forbid-deezer-arl
+        # An ARL is 192 lowercase hex characters. Nothing else in this repository is a
+        # hex run that long: the placeholders in the docs are strings of `x`, which do
+        # not match, and a git SHA stops at 40.
+        name: no Deezer ARL in a tracked file
+        entry: '\b[0-9a-f]{100,}\b'
+        language: pygrep
+        types: [text]
+
+      - id: forbid-deezer-oauth-token
+        # Deezer OAuth tokens read `fr` then hex. The documented placeholders spell
+        # `frYYYY`, and `Y` is not a hex digit.
+        name: no Deezer OAuth token in a tracked file
+        entry: '\bfr[0-9a-f]{20,}\b'
+        language: pygrep
+        types: [text]
+
+      - id: forbid-elasticsearch-api-key
+        # Only an assignment that carries a value, so the empty ones in .env.example
+        # pass and a filled one does not. Case-sensitive on purpose: these are
+        # environment variables, and the lowercase spelling is the Python field name.
+        name: no Elasticsearch API key in a tracked file
+        entry: '\b(ES_API_KEY|ES_PASSWORD)\s*=\s*\S'
+        language: pygrep
+        types: [text]

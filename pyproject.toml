@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.32"]
+build-backend = "hatchling.build"
+
+[project]
+name = "deezync"
+version = "0.1.0"
+description = "Sync Deezer listening history into an Elasticsearch index"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "requests>=2.34.2",
+    # Requires a 9.x or 10.x cluster. An 8.x client would also reach 8.x servers, but that
+    # line has shipped nothing since 8.19.3 in December 2025; see README.
+    "elasticsearch>=9.5,<10",
+    "python-dotenv>=1.2.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=9.1.1", "ruff>=0.16.2", "pre-commit>=4.6.2"]
+
+[project.scripts]
+deezync = "deezync.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/deezync"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+# The code was hand-wrapped well below this; 100 only sets the point past which
+# ruff intervenes, so its reformatting stays rare rather than routine.
+line-length = 100
+
+[tool.ruff.lint]
+# E/F is the pyflakes-pycodestyle baseline, I keeps imports sorted, UP drops
+# constructs made obsolete by the 3.11 floor, B catches the bug-shaped ones.
+select = ["E", "F", "I", "UP", "B"]

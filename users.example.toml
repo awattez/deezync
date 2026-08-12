@@ -1,0 +1,37 @@
+# Deezer accounts to synchronise. Copy to users.toml and fill in the credentials.
+# Adding a user means adding an [[accounts]] block.
+#
+# WARNING -- using an `arl` is at your own risk and your own responsibility. The private
+# web-player API is undocumented and unsupported, and Deezer's terms of use forbid
+# "harvesting and mining of texts and data" by "automated data collection devices"
+# (Article 6) and let Deezer suspend an account without notice (Article 7). The `access_token`
+# route below is the sanctioned one, but the developer portal has issued no new credentials
+# since 2024, so it is open only to whoever already has some. See the README for the full
+# reading, and decide knowingly.
+#
+# Whatever you put here is password-grade: an arl grants full account access without one.
+# Keep this file out of version control.
+#
+# An account has exactly three keys, and no more: whatever Deezer already knows
+# about a profile -- its id, its subscription country -- is read from the login
+# call every run makes anyway, so it is never declared here.
+
+[[accounts]]
+# Value of the `user` field in the Elasticsearch documents.
+name = "adrien"
+# Session cookie of the Deezer web player (see README: "Getting your ARL").
+# Never share or commit this value: it grants full access to the account.
+# Family subscriptions: each profile has its own arl -- switch to the profile in
+# the web player, then copy its arl. Add one [[accounts]] block per profile.
+arl = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# Required: where this listener is, which is what makes dayOfWeek and hourOfDay
+# meaningful. No API can guess it, and a silent default would produce local hours
+# that look plausible and are wrong -- hence no default at all. Use "UTC" if you
+# genuinely do not care.
+timezone = "Europe/Paris"
+
+# OAuth variant, for legacy credentials only (see above):
+# [[accounts]]
+# name = "alice"
+# access_token = "frYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
+# timezone = "America/Montreal"

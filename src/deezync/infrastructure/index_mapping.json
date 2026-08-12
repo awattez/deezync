@@ -1,0 +1,107 @@
+{
+  "settings": {
+    "index": {
+      "codec": "best_compression"
+    }
+  },
+  "mappings": {
+    "dynamic": "true",
+    "dynamic_date_formats": [
+      "strict_date_optional_time",
+      "yyyy/MM/dd HH:mm:ss Z||yyyy/MM/dd Z"
+    ],
+    "dynamic_templates": [
+      {
+        "stringsaskeywords": {
+          "match": "*",
+          "match_mapping_type": "string",
+          "mapping": {
+            "type": "keyword"
+          }
+        }
+      }
+    ],
+    "date_detection": true,
+    "numeric_detection": false,
+    "properties": {
+      "@timestamp": { "type": "date", "format": "strict_date_optional_time" },
+      "album": { "type": "keyword" },
+      "artist": { "type": "keyword" },
+      "country": { "type": "keyword" },
+      "dayOfWeek": { "type": "keyword" },
+      "duration": { "type": "integer" },
+      "explicit": { "type": "boolean" },
+      "hourOfDay": { "type": "byte" },
+      "id": { "type": "keyword", "doc_values": false },
+      "ip": { "type": "ip" },
+      "listened_to_ms": { "type": "long" },
+      "listened_to_pct": { "type": "float" },
+      "not_found": { "type": "boolean" },
+      "offline": { "type": "boolean" },
+      "platform": { "type": "keyword" },
+      "played_at": { "type": "date", "format": "strict_date_optional_time" },
+      "reason_end": { "type": "keyword" },
+      "reason_start": { "type": "keyword" },
+      "shuffle": { "type": "boolean" },
+      "skipped": { "type": "boolean" },
+      "deezer_metadata": {
+        "dynamic": false,
+        "properties": {
+          "album": {
+            "properties": {
+              "cover": { "type": "keyword", "index": false, "doc_values": false },
+              "cover_big": { "type": "keyword", "index": false, "doc_values": false },
+              "cover_medium": { "type": "keyword", "index": false, "doc_values": false },
+              "cover_small": { "type": "keyword", "index": false, "doc_values": false },
+              "cover_xl": { "type": "keyword", "index": false, "doc_values": false },
+              "id": { "type": "keyword" },
+              "link": { "type": "keyword", "index": false, "doc_values": false },
+              "md5_image": { "type": "keyword", "index": false, "doc_values": false },
+              "title": { "type": "keyword", "index": false, "doc_values": false },
+              "tracklist": { "type": "keyword", "index": false, "doc_values": false },
+              "type": { "type": "keyword", "index": false, "doc_values": false }
+            }
+          },
+          "artist": {
+            "properties": {
+              "id": { "type": "keyword" },
+              "link": { "type": "keyword", "index": false, "doc_values": false },
+              "md5_image": { "type": "keyword", "index": false, "doc_values": false },
+              "name": { "type": "keyword", "index": false, "doc_values": false },
+              "picture": { "type": "keyword", "index": false, "doc_values": false },
+              "picture_big": { "type": "keyword", "index": false, "doc_values": false },
+              "picture_medium": { "type": "keyword", "index": false, "doc_values": false },
+              "picture_small": { "type": "keyword", "index": false, "doc_values": false },
+              "picture_xl": { "type": "keyword", "index": false, "doc_values": false },
+              "tracklist": { "type": "keyword", "index": false, "doc_values": false },
+              "type": { "type": "keyword", "index": false, "doc_values": false }
+            }
+          },
+          "contributors": { "type": "object", "enabled": false },
+          "disk_number": { "type": "byte", "index": false, "doc_values": false },
+          "duration": { "type": "integer", "index": false, "doc_values": false },
+          "explicit_content_cover": { "type": "byte", "index": false, "doc_values": false },
+          "explicit_content_lyrics": { "type": "byte", "index": false, "doc_values": false },
+          "explicit_lyrics": { "type": "boolean", "index": false, "doc_values": false },
+          "gain": { "type": "float", "index": false, "doc_values": false },
+          "id": { "type": "keyword" },
+          "isrc": { "type": "keyword" },
+          "link": { "type": "keyword", "index": false, "doc_values": false },
+          "md5_image": { "type": "keyword", "index": false, "doc_values": false },
+          "preview": { "type": "keyword", "index": false, "doc_values": false },
+          "rank": { "type": "integer" },
+          "readable": { "type": "boolean", "index": false, "doc_values": false },
+          "timestamp": { "type": "long", "index": false, "doc_values": false },
+          "track_position": { "type": "byte", "index": false, "doc_values": false },
+          "title": { "type": "keyword", "index": false, "doc_values": false },
+          "title_short": { "type": "keyword", "index": false, "doc_values": false },
+          "title_version": { "type": "keyword", "index": false, "doc_values": false },
+          "type": { "type": "keyword", "index": false, "doc_values": false }
+        }
+      },
+      "title": { "type": "keyword" },
+      "url": { "type": "keyword", "index": false, "doc_values": false },
+      "user": { "type": "keyword" }
+    }
+  }
+}
