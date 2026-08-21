@@ -25,7 +25,7 @@ repos:
           this file holds live credentials and must never be committed, not even with
           `git add -f`; commit the .example variant instead
         language: fail
-        files: '^(users\.toml|\.env)$'
+        files: '(^|/)(users\.toml|\.env|secrets\.auto\.tfvars)$'
 
       - id: forbid-deezer-arl
         # An ARL is 192 lowercase hex characters. Nothing else in this repository is a

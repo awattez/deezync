@@ -1,5 +1,9 @@
 .env
 users.toml
+secrets.auto.tfvars
+*.tfstate
+*.tfstate.*
+.terraform/
 *.log
 
 __pycache__/
