@@ -235,6 +235,14 @@ No embedded scheduler: one run equals one cycle. Periodicity is handled by cron.
 listening. Running every 30 minutes leaves a comfortable margin: even a heavy listener
 cannot push 100 tracks through that interval. One to two hours is still safe for normal use.
 
+### Cloud Run
+
+[`ops/`](ops/) is a Terraform stack for Google Cloud: Cloud Build packs this
+repository with buildpacks, Elasticsearch and Deezer credentials go in Secret
+Manager, and a Cloud Run Job runs every 30 minutes via Cloud Scheduler. Copy
+the directory into a private repository, or apply it from this clone —
+`secrets.auto.tfvars` is gitignored. See [`ops/README.md`](ops/README.md).
+
 ## Document schema
 
 | Field | Type | Deezer source |

@@ -1,0 +1,31 @@
+# Clone the public deezync repo and pack it with Google Cloud Buildpacks.
+# Invoked by terraform apply (`gcloud builds submit --no-source`).
+substitutions:
+  _OWNER: awattez
+  _NAME: deezync
+  _REF: main
+  _IMAGE: unused
+
+steps:
+  - name: gcr.io/cloud-builders/git
+    args:
+      - clone
+      - --depth
+      - "1"
+      - --branch
+      - ${_REF}
+      - https://github.com/${_OWNER}/${_NAME}.git
+      - src
+  - name: gcr.io/k8s-skaffold/pack
+    args:
+      - build
+      - ${_IMAGE}:latest
+      - --builder=gcr.io/buildpacks/builder:google-22
+      - --network=cloudbuild
+      - --path=src
+
+images:
+  - ${_IMAGE}:latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY
